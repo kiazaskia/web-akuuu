@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Pasar Segar</title>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans", Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        background-color: #1e5050;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("video/wave-cafe-video-bg.mp4");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .login-container {
+        width: 400px;
+        padding: 40px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .login-header h1 {
+        color: #3cc;
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      .login-header i {
+        color: #3cc;
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-control {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-family: "Open Sans", Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        color: #fff;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid white;
+        box-sizing: border-box;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-bottom: 1px solid #3cc;
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .btn-primary {
+        display: block;
+        width: 100%;
+        background-color: #3cc;
+        color: white;
+        border: 0;
+        padding: 15px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 3px;
+        transition: background-color 0.3s;
+      }
+
+      .btn-primary:hover {
+        background-color: #099;
+      }
+
+      .login-footer {
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+      }
+
+      .login-footer a {
+        color: #3cc;
+        text-decoration: none;
+      }
+
+      .login-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .error-message {
+        background-color: rgba(255, 0, 0, 0.2);
+        color: #ff6b6b;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+        display: none;
+      }
+
+      .back-to-site {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .back-to-site i {
+        margin-right: 5px;
+      }
+
+      .back-to-site:hover {
+        color: #3cc;
+      }
+
+      @media (max-width: 480px) {
+        .login-container {
+          width: 90%;
+          padding: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-to-site">
+      <i class="fas fa-arrow-left"></i> Kembali ke Situs
+    </a>
+
+    <div class="login-container">
+      <div class="login-header">
+        <i class="fas fa-coffee"></i>
+        <h1>Pasar Segar</h1>
+      </div>
+
+      <div id="error-message" class="error-message">
+        Username atau password salah. Silakan coba lagi.
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Username"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+
+      <div class="login-footer">
+        <p>
+          Belum memiliki akun?
+          <a href="register.html" id="register-link">Daftar sekarang</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Get users from localStorage
+          const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+          // Find user with matching username and password
+          const user = users.find(
+            (u) => u.username === username && u.password === password
+          );
+
+          // Check default admin credentials as fallback
+          const isDefaultAdmin =
+            username === "admin" && password === "admin123";
+
+          if (user || isDefaultAdmin) {
+            // Save login state in localStorage
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("username", username);
+
+            // Store user data (except password) if not default admin
+            if (user) {
+              const userData = { ...user };
+              delete userData.password; // Don't store password in session
+              localStorage.setItem("currentUser", JSON.stringify(userData));
+            }
+
+            // Redirect to main page
+            window.location.href = "index.html";
+          } else {
+            // Show error message
+            document.getElementById("error-message").style.display = "block";
+          }
+        });
+    </script>
+  </body>
+</html>

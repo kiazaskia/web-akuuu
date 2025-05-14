@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Pasar Segar</title>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans", Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        background-color: #1e5050;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("video/wave-cafe-video-bg.mp4");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .register-container {
+        width: 400px;
+        padding: 40px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .register-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .register-header h1 {
+        color: #3cc;
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      .register-header i {
+        color: #3cc;
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-control {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-family: "Open Sans", Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        color: #fff;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid white;
+        box-sizing: border-box;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-bottom: 1px solid #3cc;
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .btn-primary {
+        display: block;
+        width: 100%;
+        background-color: #3cc;
+        color: white;
+        border: 0;
+        padding: 15px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 3px;
+        transition: background-color 0.3s;
+      }
+
+      .btn-primary:hover {
+        background-color: #099;
+      }
+
+      .register-footer {
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+      }
+
+      .register-footer a {
+        color: #3cc;
+        text-decoration: none;
+      }
+
+      .register-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .message {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+        display: none;
+      }
+
+      .error-message {
+        background-color: rgba(255, 0, 0, 0.2);
+        color: #ff6b6b;
+      }
+
+      .success-message {
+        background-color: rgba(0, 255, 0, 0.2);
+        color: #66ff66;
+      }
+
+      .back-to-site {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .back-to-site i {
+        margin-right: 5px;
+      }
+
+      .back-to-site:hover {
+        color: #3cc;
+      }
+
+      @media (max-width: 480px) {
+        .register-container {
+          width: 90%;
+          padding: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="back-to-site">
+      <i class="fas fa-arrow-left"></i> Kembali ke Situs
+    </a>
+
+    <div class="register-container">
+      <div class="register-header">
+        <i class="fas fa-coffee"></i>
+        <h1>Pasar Segar</h1>
+      </div>
+
+      <div id="error-message" class="message error-message">
+        Terjadi kesalahan. Silakan coba lagi.
+      </div>
+
+      <div id="success-message" class="message success-message">
+        Pendaftaran berhasil! Silakan login.
+      </div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="fullname"
+            placeholder="Nama Lengkap"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Username"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            id="confirm-password"
+            placeholder="Konfirmasi Password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-primary">Daftar</button>
+      </form>
+
+      <div class="register-footer">
+        <p>
+          Sudah memiliki akun?
+          <a href="login.html" id="login-link">Login</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("register-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const fullname = document.getElementById("fullname").value;
+          const email = document.getElementById("email").value;
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirm-password").value;
+
+          // Error messages
+          const errorMessage = document.getElementById("error-message");
+          const successMessage = document.getElementById("success-message");
+
+          // Reset messages
+          errorMessage.style.display = "none";
+          successMessage.style.display = "none";
+
+          // Validate passwords match
+          if (password !== confirmPassword) {
+            errorMessage.textContent =
+              "Password tidak sama. Silakan coba lagi.";
+            errorMessage.style.display = "block";
+            return;
+          }
+
+          // In a real implementation, this would be a server request
+          // For now, we'll store the user data in localStorage
+
+          try {
+            // Check if username already exists
+            const existingUsers = JSON.parse(
+              localStorage.getItem("users") || "[]"
+            );
+
+            if (existingUsers.some((user) => user.username === username)) {
+              errorMessage.textContent =
+                "Username sudah digunakan. Silakan pilih username lain.";
+              errorMessage.style.display = "block";
+              return;
+            }
+
+            if (existingUsers.some((user) => user.email === email)) {
+              errorMessage.textContent =
+                "Email sudah terdaftar. Silakan gunakan email lain.";
+              errorMessage.style.display = "block";
+              return;
+            }
+
+            // Add new user
+            existingUsers.push({
+              fullname,
+              email,
+              username,
+              password,
+              registerDate: new Date().toISOString(),
+            });
+
+            // Save to localStorage
+            localStorage.setItem("users", JSON.stringify(existingUsers));
+
+            // Show success message
+            successMessage.style.display = "block";
+
+            // Reset form
+            document.getElementById("register-form").reset();
+
+            // Redirect to login page after 2 seconds
+            setTimeout(function () {
+              window.location.href = "login.html";
+            }, 2000);
+          } catch (error) {
+            console.error("Registration error:", error);
+            errorMessage.textContent =
+              "Terjadi kesalahan saat mendaftar. Silakan coba lagi.";
+            errorMessage.style.display = "block";
+          }
+        });
+    </script>
+  </body>
+</html>
